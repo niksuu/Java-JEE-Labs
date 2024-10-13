@@ -1,0 +1,88 @@
+# Get all users.
+
+GET http://localhost:9082/players/api/users
+
+###
+
+# Get single user.
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+
+###
+
+# delete user.
+
+DELETE http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+
+###
+
+# User disappeared
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+
+###
+
+# create or update user
+
+PUT http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+Content-Type: application/json
+
+{
+  "username": "Wacek",
+  "email": "Wacuś@wp.pl"
+}
+
+###
+
+# User is changed
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+
+###
+
+# create or update user
+
+PUT http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+Content-Type: application/json
+
+{
+  "username": "Karak",
+  "email": "Karak@wp.pl"
+}
+
+###
+
+# User is changed
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
+
+### AVATAR
+
+# Get single user avatar.
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399/avatar
+
+###
+
+# delete avatarr.
+
+DELETE http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399/avatar
+
+###
+
+# Create character portrait.
+
+PUT http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="changedAvatar.png'
+
+< C:\Users\Admin\Documents\GitHub\Java-JEE-Labs\src\main\resources\avatar\changedAvatar.png
+--boundary--
+
+###
+
+# Get single user avatar.
+
+GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399/avatar
