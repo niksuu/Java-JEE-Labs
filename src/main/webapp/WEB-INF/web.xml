@@ -4,6 +4,12 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0"
          metadata-complete="false">
+
+    <context-param>
+        <param-name>pictureDirectory</param-name>
+        <param-value>pictureDirectory</param-value>
+    </context-param>
+
     <listener>
         <listener-class>org.example.config.listener.CreateResource</listener-class>
     </listener>
