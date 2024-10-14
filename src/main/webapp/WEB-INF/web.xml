@@ -8,7 +8,7 @@
         <listener-class>org.example.config.listener.CreateResource</listener-class>
     </listener>
     <listener>
-        <listener-class>org.example.config.listener.CreateDataBase</listener-class>
+        <listener-class>org.example.config.listener.CreateDataStore</listener-class>
     </listener>
     <listener>
         <listener-class>org.example.config.listener.CreateServices</listener-class>

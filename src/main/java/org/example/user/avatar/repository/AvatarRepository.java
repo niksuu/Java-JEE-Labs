@@ -1,16 +1,13 @@
 package org.example.user.avatar.repository;
 
-import org.example.database.DataBase;
+import org.example.datastore.DataStore;
 
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 public class AvatarRepository {
-    private final DataBase dataBase;
+    private final DataStore dataBase;
 
-    public AvatarRepository(DataBase dataBase){
+    public AvatarRepository(DataStore dataBase){
         this.dataBase = dataBase;
     }
     public void deleteAvatar(UUID uuid){

@@ -1,20 +1,17 @@
 package org.example.user.repository.memory;
 
-import org.example.database.DataBase;
+import org.example.datastore.DataStore;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class UserInMemoryRepository implements UserRepository {
-    private final DataBase dataBase;
+    private final DataStore dataBase;
 
-    public UserInMemoryRepository(DataBase dataBase){
+    public UserInMemoryRepository(DataStore dataBase){
         this.dataBase = dataBase;
     }
 

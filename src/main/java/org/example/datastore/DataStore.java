@@ -1,4 +1,4 @@
-package org.example.database;
+package org.example.datastore;
 
 
 import org.example.Util.CloningUtility;
@@ -6,10 +6,8 @@ import org.example.controller.servlet.exception.NotFoundException;
 import org.example.user.entity.User;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -17,13 +15,13 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class DataBase {
+public class DataStore {
     private final Set<User> users = new HashSet<>();
 
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
 
-    public DataBase(CloningUtility cloningUtility, Path avatarDirectory) {
+    public DataStore(CloningUtility cloningUtility, Path avatarDirectory) {
         this.cloningUtility = cloningUtility;
         this.avatarDirectory = avatarDirectory;
     }

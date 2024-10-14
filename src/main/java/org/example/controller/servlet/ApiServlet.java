@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
                 ApiServlet.Paths.API +"/*"
         }
 )
-@MultipartConfig(maxFileSize = 200 * 1024)
+@MultipartConfig(maxFileSize = 300 * 1024)
 public class ApiServlet extends HttpServlet {
     private UserController userController;
     private AvatarController avatarController;

@@ -4,9 +4,6 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import lombok.SneakyThrows;
-import org.example.Util.CloningUtility;
-import org.example.database.DataBase;
-import org.example.user.service.UserService;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
