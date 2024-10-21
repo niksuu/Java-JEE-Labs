@@ -8,6 +8,9 @@ import jakarta.inject.Inject;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+import org.example.player.entity.Player;
+import org.example.player.service.ClubService;
+import org.example.player.service.PlayerService;
 import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
@@ -19,10 +22,15 @@ import java.util.UUID;
 public class DataInitialization  implements ServletContextListener {
 
     private final UserService userService;
+    private final ClubService clubService;
+    private final PlayerService playerService;
+
 
     @Inject
     public DataInitialization(UserService userService) {
         this.userService = userService;
+        this.clubService = new ClubService();
+        this.playerService = new PlayerService();
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -68,6 +76,9 @@ public class DataInitialization  implements ServletContextListener {
         userService.createUser(sebastian);
         userService.createUser(jakub);
         userService.createUser(julia);
+
+
+
 
     }
 }

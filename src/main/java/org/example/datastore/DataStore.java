@@ -6,6 +6,8 @@ import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import org.example.Util.CloningUtility;
 import org.example.controller.servlet.exception.NotFoundException;
+import org.example.player.entity.Club;
+import org.example.player.entity.Player;
 import org.example.user.entity.User;
 
 import java.io.IOException;
@@ -14,10 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +24,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(force = true)
 public class DataStore {
     private final Set<User> users = new HashSet<>();
+    private final Set<Player> players = new HashSet<>();
+    private final Set<Club> clubs = new HashSet<>();
 
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
@@ -41,16 +42,33 @@ public class DataStore {
         {}
     }
 
-    public synchronized List<User> findAllUsers(){
+    public synchronized List<User> findAllUsers() {
         return users.stream()
-                .map(cloningUtility::clone)
+                .map(user -> {
+                    User clonedUser = cloningUtility.clone(user);
+                    List<Player> userPlayers = players.stream()
+                            .filter(player -> player.getUser().getId().equals(clonedUser.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedUser.setPlayers(userPlayers);
+                    return clonedUser;
+                })
                 .collect(Collectors.toList());
     }
-    public synchronized User findUserById(UUID uuid){
+
+    public synchronized User findUserById(UUID uuid) {
         return users.stream()
                 .filter(user -> user.getId().equals(uuid))
                 .findFirst()
-                .map(cloningUtility::clone)
+                .map(user -> {
+                    User clonedUser = cloningUtility.clone(user);
+                    List<Player> userPlayers = players.stream()
+                            .filter(player -> player.getUser().getId().equals(clonedUser.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedUser.setPlayers(userPlayers);
+                    return clonedUser;
+                })
                 .orElse(null);
     }
 
@@ -126,4 +144,107 @@ public class DataStore {
             throw new RuntimeException("Could not retrieve avatar for user with id \"%s\"".formatted(uuid), e);
         }
     }
+
+    public synchronized Club findClubById(UUID id) {
+        return clubs.stream()
+                .filter(club -> club.getId().equals(id))
+                .findFirst()
+                .map(club -> {
+                    Club clonedClub = cloningUtility.clone(club);
+                    List<Player> clubPlayers = players.stream()
+                            .filter(player -> player.getClub().getId().equals(clonedClub.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedClub.setPlayers(clubPlayers);
+                    return clonedClub;
+                })
+                .orElse(null);
+    }
+    
+    
+    public synchronized List<Club> findAllClubs() {
+        return clubs.stream()
+                .map(club -> {
+                    Club clonedClub = cloningUtility.clone(club);
+                    List<Player> clubPlayers = players.stream()
+                            .filter(player -> player.getClub().getId().equals(clonedClub.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedClub.setPlayers(clubPlayers);
+                    return clonedClub;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public synchronized void createClub(Club entity) {
+        if (clubs.stream().anyMatch(club -> club.getId().equals(entity.getId()))){
+            throw new IllegalArgumentException("This id is used!");
+        }
+        clubs.add(cloningUtility.clone(entity));
+    }
+    public synchronized void deleteClub(Club entity) {
+        if (!clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
+    public synchronized void updateClub(Club entity) {
+        if (clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
+            clubs.add(cloningUtility.clone(entity));
+        } else {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
+    public synchronized Player findPlayerById(UUID id) {
+        return players.stream()
+                .filter(player -> player.getId().equals(id))
+                .findFirst()
+                .map(cloningUtility::clone)
+                .orElse(null);
+    }
+    public synchronized List<Player> findAllPlayers() {
+        return players.stream()
+                .map(cloningUtility::clone)
+                .collect(Collectors.toList());
+    }
+    public synchronized void createPlayer(Player entity) {
+        if (players.stream().anyMatch(player -> player.getId().equals(entity.getId()))){
+            throw new IllegalArgumentException("This id is used!");
+        }
+        Player player = cloneWithRelationships(entity);
+        players.add(cloningUtility.clone(player));
+    }
+    public synchronized void deletePlayer(Player entity) {
+        if (!players.removeIf(player -> player.getId().equals(entity.getId()))) {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
+    public synchronized void updatePlayer(Player entity) {
+        Player value = cloneWithRelationships(entity);
+        if (players.removeIf(player -> player.getId().equals(entity.getId()))) {
+            players.add(value);
+        } else {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
+
+    private Player cloneWithRelationships(Player value) {
+        Player entity = cloningUtility.clone(value);
+
+        if (entity.getUser() != null) {
+            entity.setUser(users.stream()
+                    .filter(user -> user.getId().equals(value.getUser().getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getId()))));
+        }
+
+        if (entity.getClub() != null) {
+            entity.setClub(clubs.stream()
+                    .filter(profession -> profession.getId().equals(value.getClub().getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No profession with id \"%s\".".formatted(value.getClub().getId()))));
+        }
+
+        return entity;
+    }
+
 }

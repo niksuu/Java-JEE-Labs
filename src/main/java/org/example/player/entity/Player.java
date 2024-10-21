@@ -12,7 +12,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
 @EqualsAndHashCode
 public class Player implements Serializable{
     private UUID id;
@@ -21,4 +20,17 @@ public class Player implements Serializable{
     private Role role;
     private Club club;
     private User user;
+
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", overall='" + overall + '\'' +
+                ", Role=" + role +
+                ", club=" + club.getName() +
+                ", user=" + user.getUsername() +
+                '}';
+    }
 }
