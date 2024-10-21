@@ -1,5 +1,6 @@
 package org.example.controller.servlet;
 
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -25,8 +26,8 @@ import java.util.regex.Pattern;
 )
 @MultipartConfig(maxFileSize = 300 * 1024)
 public class ApiServlet extends HttpServlet {
-    private UserController userController;
-    private AvatarController avatarController;
+    private final UserController userController;
+    private final AvatarController avatarController;
 
     public static final class Paths {
         public static final String API = "/api";
@@ -40,11 +41,10 @@ public class ApiServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        userController = (UserController) getServletContext().getAttribute("userController");
-        avatarController = (AvatarController) getServletContext().getAttribute("avatarController");
+    @Inject
+    public ApiServlet(UserController userController, AvatarController avatarController) {
+        this.userController = userController;
+        this.avatarController = avatarController;
     }
 
     @Override

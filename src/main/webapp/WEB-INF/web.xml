@@ -10,18 +10,9 @@
         <param-value>pictureDirectory</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>org.example.config.listener.CreateResource</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.example.config.listener.CreateDataStore</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.example.config.listener.CreateServices</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.example.config.listener.CreateControllers</listener-class>
-    </listener>
+    <context-param>
+        <param-name>avatarDirectory</param-name>
+        <param-value>C:\Users\Admin\Documents\GitHub\Java-JEE-Labs\src\main\resources\avatar</param-value>
+    </context-param>
 
 </web-app>

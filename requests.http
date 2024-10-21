@@ -86,3 +86,9 @@ Content-Disposition: form-data; name="avatar"; filename="changedAvatar.png'
 # Get single user avatar.
 
 GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399/avatar
+
+###
+
+# Get another user avatar
+
+GET http://localhost:9082/players/api/users/9f000860-2afb-4564-8616-7cf7aecabe4a/avatar
