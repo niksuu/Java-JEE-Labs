@@ -8,6 +8,7 @@ import org.example.Util.CloningUtility;
 import org.example.controller.servlet.exception.NotFoundException;
 import org.example.player.entity.Club;
 import org.example.player.entity.Player;
+import org.example.player.service.PlayerService;
 import org.example.user.entity.User;
 
 import java.io.IOException;
@@ -29,9 +30,10 @@ public class DataStore {
 
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
+    private final PlayerService playerService;
 
     @Inject
-    public DataStore(CloningUtility cloningUtility) throws URISyntaxException {
+    public DataStore(CloningUtility cloningUtility, PlayerService playerService) throws URISyntaxException {
         this.cloningUtility = cloningUtility;
         this.avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
 
@@ -40,6 +42,7 @@ public class DataStore {
             Files.createDirectories(this.avatarDirectory);
         }catch (IOException e)
         {}
+        this.playerService = playerService;
     }
 
     public synchronized List<User> findAllUsers() {
@@ -183,8 +186,13 @@ public class DataStore {
         clubs.add(cloningUtility.clone(entity));
     }
     public synchronized void deleteClub(Club entity) {
-        if (!clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
+        if (clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
+            for (Player player : playerService.findAllPlayers()) {
+                if (player.getClub().getId().equals(entity.getId())) playerService.deletePlayer(player);
+            }
+        }else {
             throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+
         }
     }
     public synchronized void updateClub(Club entity) {

@@ -2,7 +2,9 @@ package org.example.player.repository;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import org.example.datastore.DataStore;
 import org.example.player.entity.Club;
 
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@RequestScoped
 public class ClubRepositoryImpl implements ClubRepository {
     private final DataStore dataStore;
 
