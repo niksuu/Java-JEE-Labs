@@ -85,8 +85,12 @@ public class DataStore {
     }
 
     public synchronized void deleteUser(UUID id) {
-        if (!users.removeIf(user -> user.getId().equals(id))) {
-            throw new NotFoundException("There is no user with \"%s\"".formatted(id));
+        if (users.removeIf(user -> user.getId().equals(id))) {
+            for(Player player : playerService.findAllPlayers()) {
+                if (player.getUser().getId().equals(id)) playerService.deletePlayer(player);
+            }
+        } else {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(id));
         }
     }
 

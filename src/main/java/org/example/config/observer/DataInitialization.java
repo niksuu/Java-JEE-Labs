@@ -188,14 +188,10 @@ public class DataInitialization  implements ServletContextListener {
         clubService.findAllClubs().forEach(club -> {
             System.out.println();
             System.out.println("Club: " + club.getName());
-            if (club.getPlayers() != null && !club.getPlayers().isEmpty()) {
                 System.out.println("Players: :");
                 club.getPlayers().forEach(player -> {
-                    System.out.println("   * " + player.getName());
+                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
                 });
-            } else {
-                System.out.println("NO PLAYERS IN THIS CLUB ");
-            }
             System.out.println();
             System.out.println(" ");
         });
@@ -203,31 +199,27 @@ public class DataInitialization  implements ServletContextListener {
         System.out.println("==================USERS====================");
         userService.findAllUsers().forEach(user -> {
             System.out.println("User: " + user.getUsername());
-            if (user.getPlayers() != null && !user.getPlayers().isEmpty()) {
                 System.out.println("Players: :");
                 user.getPlayers().forEach(player -> {
-                    System.out.println("  * " + player.getName());
+                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
                 });
-            } else {
-                System.out.println("    No players available for this user.");
-            }
             System.out.println();
             System.out.println(" ");
         });
         System.out.println();
 
         clubService.deleteClub(barca);
+        ronaldo.setOverall(90);
+        playerService.updatePlayer(ronaldo);
 
+
+        System.out.println("==================USERS====================");
         userService.findAllUsers().forEach(user -> {
             System.out.println("User: " + user.getUsername());
-            if (user.getPlayers() != null && !user.getPlayers().isEmpty()) {
                 System.out.println("Players: :");
                 user.getPlayers().forEach(player -> {
-                    System.out.println("  * " + player.getName());
+                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
                 });
-            } else {
-                System.out.println("    No players available for this user.");
-            }
             System.out.println();
             System.out.println(" ");
         });
