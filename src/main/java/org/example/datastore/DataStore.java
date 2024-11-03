@@ -190,6 +190,7 @@ public class DataStore {
         clubs.add(cloningUtility.clone(entity));
     }
     public synchronized void deleteClub(Club entity) {
+
         if (clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
             for (Player player : playerService.findAllPlayers()) {
                 if (player.getClub().getId().equals(entity.getId())) playerService.deletePlayer(player);
