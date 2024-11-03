@@ -12,7 +12,6 @@ public class PlayerToModelFunction implements Function<Player, PlayerModel>, Ser
                 .name(entity.getName())
                 .overall(entity.getOverall())
                 .club(entity.getClub().getName())
-                .user(entity.getUser().getUsername())
                 .build();
     }
 }

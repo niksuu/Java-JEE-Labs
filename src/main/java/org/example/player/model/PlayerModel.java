@@ -25,5 +25,5 @@ public class PlayerModel {
     private Integer overall;
     private Role role;
     private String club;
-    private String user;
+
 }

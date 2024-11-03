@@ -44,6 +44,13 @@
                                     <f:param name="id" value="#{player.id}"/>
                                 </h:link>
                             </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Edit</f:facet>
+                                <h:link outcome="/player/player_edit.xhtml" value="Edit">
+                                    <f:param name="id" value="#{player.id}"/>
+                                </h:link>
+                            </h:column>
                             <h:column>
                                 <f:facet name="header">Delete</f:facet>
                                 <h:form>
@@ -51,6 +58,12 @@
                                                      action="#{clubView.deletePlayer(player.id)}"/>
                                 </h:form>
                             </h:column>
+
+                            <f:facet name="footer">
+                                <h:button styleClass="btn" outcome="/player/player_create.xhtml"
+                                          value="Create new player"/>
+                            </f:facet>
+
                         </h:dataTable>
                     </div>
                 </div>

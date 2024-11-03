@@ -31,4 +31,12 @@ public class ModelFunctionFactory {
         return new PlayerToModelFunction();
     }
 
+    public ModelToPlayerFunction modelToPlayerFunction() {
+        return new ModelToPlayerFunction();
+    }
+
+    public PlayerToEditModelFunction playerToEditModelFunction() {return new PlayerToEditModelFunction();}
+
+    public UpdatePlayerWithModelFunction updatePlayerWithModelFunction() {return new UpdatePlayerWithModelFunction();}
+
 }
