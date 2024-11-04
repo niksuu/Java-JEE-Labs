@@ -3,7 +3,7 @@ package org.example.user.controller.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.example.controller.servlet.exception.NotFoundException;
+import jakarta.ws.rs.NotFoundException;
 import org.example.factories.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;

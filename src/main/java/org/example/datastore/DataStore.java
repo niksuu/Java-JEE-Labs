@@ -5,7 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import org.example.Util.CloningUtility;
-import org.example.controller.servlet.exception.NotFoundException;
+import jakarta.ws.rs.NotFoundException;
 import org.example.player.entity.Club;
 import org.example.player.entity.Player;
 import org.example.player.service.PlayerService;
@@ -204,7 +204,7 @@ public class DataStore {
         if (clubs.removeIf(club -> club.getId().equals(entity.getId()))) {
             clubs.add(cloningUtility.clone(entity));
         } else {
-            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+            this.createClub(entity);
         }
     }
     public synchronized Player findPlayerById(UUID id) {
@@ -258,6 +258,14 @@ public class DataStore {
         }
 
         return entity;
+    }
+
+
+    public synchronized List<Player> findAllByClub(UUID clubId) {
+        return players.stream()
+                .filter(player -> player.getClub().getId().equals(clubId))
+                .map(cloningUtility::clone)
+                .collect(Collectors.toList());
     }
 
 }

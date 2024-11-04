@@ -41,5 +41,10 @@ public class PlayerRepositoryImpl implements PlayerRepository {
         dataStore.updatePlayer(entity);
     }
 
+    @Override
+    public List<Player> findAllByClub(UUID uuid) {
+        return dataStore.findAllByClub(uuid);
+    }
+
 
 }

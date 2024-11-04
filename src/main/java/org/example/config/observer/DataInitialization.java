@@ -208,22 +208,21 @@ public class DataInitialization  implements ServletContextListener {
         });
         System.out.println();
 
-        clubService.deleteClub(barca);
-        ronaldo.setOverall(90);
-        playerService.updatePlayer(ronaldo);
+     //   clubService.deleteClub(barca);
+     //   ronaldo.setOverall(90);
+     //   playerService.updatePlayer(ronaldo);
 
-
-        System.out.println("==================USERS====================");
-        userService.findAllUsers().forEach(user -> {
-            System.out.println("User: " + user.getUsername());
-                System.out.println("Players: :");
-                user.getPlayers().forEach(player -> {
-                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
-                });
-            System.out.println();
-            System.out.println(" ");
-        });
-        System.out.println();
+     //   System.out.println("==================USERS====================");
+     //   userService.findAllUsers().forEach(user -> {
+     //       System.out.println("User: " + user.getUsername());
+     //           System.out.println("Players: :");
+     //           user.getPlayers().forEach(player -> {
+     //               System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
+     //           });
+     //       System.out.println();
+     //       System.out.println(" ");
+     //   });
+     //   System.out.println();
 
 
         requestContextController.deactivate();

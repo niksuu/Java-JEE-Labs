@@ -92,3 +92,82 @@ GET http://localhost:9082/players/api/users/3c9cc7b4-a33b-409d-8aed-ae0ecc24b399
 # Get another user avatar
 
 GET http://localhost:9082/players/api/users/9f000860-2afb-4564-8616-7cf7aecabe4a/avatar
+
+
+
+
+
+
+
+//RESTFULL CLUB/PLAYER
+
+###
+
+# Get all clubs.
+
+GET http://localhost:9082/players/api/clubs
+
+###
+
+# Get single club.
+
+GET http://localhost:9082/players/api/clubs/ce3b7596-948f-4097-a7ef-0b4876afc695
+
+###
+
+# delete club.
+
+DELETE http://localhost:9082/players/api/clubs/ce3b7596-948f-4097-a7ef-0b4876afc695
+
+###
+
+# create or update club
+
+PUT http://localhost:9082/players/api/clubs/dd56efbf-2998-4b7c-b986-8df98f32fea0
+Content-Type: application/json
+
+{
+  "name": "FC BARCA",
+  "budget": 12000,
+  "description": "TEST DESCRIPTION"
+}
+
+###
+
+# Get all players.
+
+GET http://localhost:9082/players/api/players
+
+
+###
+
+# Get all players of a given club
+
+GET http://localhost:9082/players/api/clubs/dd56efbf-2998-4b7c-b986-8df98f32fea0/players
+
+###
+
+# Get a player
+
+GET http://localhost:9082/players/api/players/5abec608-172b-40bc-a742-5fd2e89f347c
+
+###
+
+# Remove a player
+
+DELETE http://localhost:9082/players/api/players/5abec608-172b-40bc-a742-5fd2e89f347c
+
+
+###
+
+PUT http://localhost:9082/players/api/clubs/ce3b7596-948f-4097-a7ef-0b4876afc695/players/b8db2e5a-02fc-4dad-8628-73d4fce10b63
+Content-Type: application/json
+
+{
+  "name": "Maszyna",
+  "role" : "STRIKER",
+  "overall": 99,
+  "user" : "9f000860-2afb-4564-8616-7cf7aecabe4a"
+}
+
+
