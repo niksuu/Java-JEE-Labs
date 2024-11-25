@@ -1,4 +1,5 @@
 package org.example.player.View;
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -16,19 +17,31 @@ import java.util.Optional;
 import java.util.UUID;
 @ViewScoped
 @Named
+
 public class ClubEdit implements Serializable {
-    private final ClubService service;
+    private ClubService service;
+
     private final ModelFunctionFactory factory;
+
+
     @Setter
     @Getter
     private UUID id;
+
+
     @Getter
     private ClubEditModel club;
+
+
     @Inject
-    public ClubEdit(ClubService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public ClubEdit(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+    @EJB
+    public void setService(ClubService service) {
+        this.service = service;
+    }
+
     public void init() throws IOException {
         Optional<Club> club = service.findClubById(id);
         if (club.isPresent()) {
@@ -37,6 +50,7 @@ public class ClubEdit implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Club not found");
         }
     }
+
     public String saveAction() {
         service.updateClub(factory.updateClubWithModelFunction().apply(service.findClubById(id).orElseThrow(), club));
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();

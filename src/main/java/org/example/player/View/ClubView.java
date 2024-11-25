@@ -1,6 +1,7 @@
 package org.example.player.View;
 
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -22,9 +23,9 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class ClubView implements Serializable {
-    private final ClubService service;
+    private  ClubService service;
+    private  PlayerService playerService;
     private final ModelFunctionFactory factory;
-    private final PlayerService playerService;
 
     @Setter
     @Getter
@@ -33,10 +34,17 @@ public class ClubView implements Serializable {
     @Getter
     private ClubModel club;
 
+
     @Inject
-    public ClubView(ClubService service, ModelFunctionFactory factory, PlayerService playerService) {
-        this.service = service;
+    public ClubView(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+    @EJB
+    public void setService(ClubService service) {
+        this.service = service;
+    }
+    @EJB
+    public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
     }
 
@@ -49,10 +57,9 @@ public class ClubView implements Serializable {
         }
     }
 
-    public String deletePlayer(UUID id){
+    public String deletePlayer(UUID id) {
         playerService.deletePlayer(Player.builder().id(id).build());
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return viewId + "?faces-redirect=true&includeViewParams=true";
     }
-    
 }

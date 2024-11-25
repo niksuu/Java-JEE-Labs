@@ -74,3 +74,27 @@ Content-Type: application/json
 }
 
 
+### USERS
+
+# get all users
+
+GET http://localhost:9082/movieRental/api/users
+
+###
+
+# create user
+
+PUT http://localhost:9082/movieRental/api/users/0ca05b76-9b5a-4451-98b2-3f31f1d75589
+Content-Type: application/json
+
+{
+  "username": "test",
+  "email": "tescioch@awp.pl"
+}
+
+###
+
+# Get user.
+
+GET http://localhost:9082/movieRental/api/users/0ca05b76-9b5a-4451-98b2-3f31f1d75589
+

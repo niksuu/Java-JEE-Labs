@@ -1,4 +1,5 @@
 package org.example.player.View;
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -19,18 +20,26 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class PlayerView implements Serializable {
-    private final PlayerService service;
-    private final ModelFunctionFactory factory;
+    private  PlayerService service;
+    private  ModelFunctionFactory factory;
+
     @Setter
     @Getter
     private UUID id;
+
     @Getter
     private PlayerModel player;
+
+
     @Inject
-    public PlayerView(PlayerService service, ModelFunctionFactory factory ) {
-        this.service = service;
+    public PlayerView( ModelFunctionFactory factory) {
         this.factory = factory;
     }
+    @EJB
+    public void setService(PlayerService service) {
+        this.service = service;
+    }
+
     public void init() throws IOException {
         Optional<Player> player = service.findPlayerById(id);
         if (player.isPresent()) {

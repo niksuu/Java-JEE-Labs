@@ -1,15 +1,22 @@
 package org.example.config.observer;
 
 
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.player.entity.Club;
 import org.example.player.entity.Player;
 import org.example.player.entity.Role;
@@ -23,13 +30,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 @NoArgsConstructor(force = true)
-public class DataInitialization  implements ServletContextListener {
+public class DataInitialization  {
 
-    private final UserService userService;
-    private final ClubService clubService;
-    private final PlayerService playerService;
+    private  UserService userService;
+    private  ClubService clubService;
+    private  PlayerService playerService;
 
 
     @Inject
@@ -39,13 +48,28 @@ public class DataInitialization  implements ServletContextListener {
         this.playerService = playerService;
     }
 
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
+    @EJB
+    public void setClubService(ClubService clubService) {
+        this.clubService = clubService;
+    }
+    @EJB
+    public void setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
+    @EJB
+    public void  setUserService(UserService userService){
+        this.userService = userService;
 
+
+    }
+
+    @PostConstruct
+    @SneakyThrows
     private void init(){
-
+        if (userService.findAllUsers().size() > 0){
+            return;
+        }
         Club real = Club.builder()
                 .id(UUID.randomUUID())
                 .name("Real Madrid")

@@ -1,4 +1,5 @@
 package org.example.player.View;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.faces.view.ViewScoped;
@@ -18,18 +19,21 @@ import java.util.stream.Collectors;
 @Named
 @ViewScoped
 public class ClubCreate implements Serializable {
-    private final ClubService clubService;
+    private  ClubService clubService;
     private final ModelFunctionFactory factory;
     @Getter
     private ClubCreateModel club;
 
     @Inject
     public ClubCreate(
-            ClubService clubService,
             ModelFunctionFactory factory
     ) {
-        this.clubService = clubService;
         this.factory = factory;
+    }
+
+    @EJB
+    public void setClubService(ClubService clubService) {
+        this.clubService = clubService;
     }
 
     public void init() {
@@ -38,6 +42,7 @@ public class ClubCreate implements Serializable {
                 .id(UUID.randomUUID())
                 .build();
     }
+
 
     public String saveAction() {
         System.out.println(club);

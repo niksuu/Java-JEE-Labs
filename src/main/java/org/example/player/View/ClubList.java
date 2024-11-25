@@ -1,5 +1,6 @@
 package org.example.player.View;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -12,20 +13,28 @@ import org.example.player.service.ClubService;
 @ApplicationScoped
 @Named
 public class ClubList {
-    private final ClubService service;
-    private ClubsModel Clubs;
+    private  ClubService service;
     private final ModelFunctionFactory factory;
+    private ClubsModel clubs;
+
+
     @Inject
-    public ClubList(ClubService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public ClubList(ModelFunctionFactory factory) {
         this.factory = factory;
     }
-    public ClubsModel getClubs() {
-        if (Clubs == null) {
-            Clubs = factory.clubsToModelFunction().apply(service.findAllClubs());
-        }
-        return Clubs;
+
+    @EJB
+    public void setService(ClubService service) {
+        this.service = service;
     }
+
+    public ClubsModel getClubs() {
+        if (clubs == null) {
+            clubs = factory.clubsToModelFunction().apply(service.findAllClubs());
+        }
+        return clubs;
+    }
+
     public String deleteAction(ClubsModel.Club club) {
         service.deleteClub(Club.builder().id(club.getId()).build());
         return "club_list?faces-redirect=true";

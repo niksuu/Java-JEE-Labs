@@ -1,6 +1,7 @@
 package org.example.user.repository.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@Dependent
 public class UserPersistenceRepository implements UserRepository {
     private EntityManager em;
     @PersistenceContext

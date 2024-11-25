@@ -1,4 +1,6 @@
 package org.example.player.controller.rest;
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
@@ -19,37 +21,45 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class PlayerRestController implements PlayerController {
-    private final PlayerService service;
+    private  PlayerService service;
     private final DtoFunctionFactory factory;
+
     @Inject
-    public PlayerRestController(PlayerService service, DtoFunctionFactory factory) {
-        this.service = service;
+    public PlayerRestController( DtoFunctionFactory factory) {
         this.factory = factory;
     }
+    @EJB
+    public void setService(PlayerService service) {
+        this.service = service;
+    }
+
     @Override
     public GetPlayersResponse getPlayers() {
         return factory.playersToResponse().apply(service.findAllPlayers());
     }
+
     @Override
-    public GetPlayersResponse getPlayerOfClub(UUID id) {
-        return factory.playersToResponse().apply(service.findAllByClub(Club.builder().id(id).build()));
+    public GetPlayersResponse getPlayerOfClub(UUID uuid) {
+        return factory.playersToResponse().apply(service.findAllByClub(Club.builder().id(uuid).build()));
     }
+
     @Override
     public GetPlayerResponse getPlayer(UUID id) {
         return service.findPlayerById(id)
                 .map(factory.playerToResponse())
                 .orElseThrow(NotFoundException::new);
     }
+
     @Override
     public void deletePlayer(UUID id) {
         service.deletePlayer(Player.builder().id(id).build());
     }
-    
+
     @Override
     public void putPlayer(UUID clubId, UUID id, PutPlayerRequest request) {
         try {
             service.createPlayer(factory.requestToPlayer().apply(clubId,id,request));
-        }  catch (TransactionalException ex) {
+        }  catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);
@@ -57,4 +67,5 @@ public class PlayerRestController implements PlayerController {
             throw ex;
         }
     }
+
 }
