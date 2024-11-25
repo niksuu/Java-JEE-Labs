@@ -1,5 +1,6 @@
 package org.example.user.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.player.entity.Player;
 import java.io.Serializable;
@@ -13,13 +14,27 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
+    @Id
     private UUID id;
     private String username;
+    @Column(name = "registration_date")
     private LocalDate registrationDate;
     private String email;
-    @Singular
+
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Player> players;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private byte[] avatar;
 }
 
 

@@ -1,6 +1,7 @@
 package org.example.player.entity;
 
 
+import jakarta.persistence.*;
 import org.example.user.entity.User;
 import lombok.*;
 import java.io.Serializable;
@@ -13,12 +14,20 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
+@Entity
+@Table(name = "players")
+@ToString
 public class Player implements Serializable{
+    @Id
     private UUID id;
     private String name;
     private Integer overall;
     private Role role;
+    @ManyToOne
+    @JoinColumn(name="club")
     private Club club;
+    @ManyToOne
+    @JoinColumn(name = "user")
     private User user;
 
 

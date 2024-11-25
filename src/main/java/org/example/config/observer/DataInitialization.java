@@ -129,7 +129,7 @@ public class DataInitialization  implements ServletContextListener {
 
 
         Player ronaldo = Player.builder()
-                .id(UUID.fromString("b8db2e5a-02fc-4dad-8628-73d4fce10b63"))
+                .id(UUID.randomUUID())
                 .name("Cristiano Ronaldo")
                 .overall(91)
                 .role(Role.STRIKER)
@@ -138,7 +138,7 @@ public class DataInitialization  implements ServletContextListener {
                 .build();
 
         Player messi = Player.builder()
-                .id(UUID.fromString("5abec608-172b-40bc-a742-5fd2e89f347c"))
+                .id(UUID.randomUUID())
                 .name("Lionel Messi")
                 .overall(93)
                 .role(Role.STRIKER)
@@ -148,7 +148,7 @@ public class DataInitialization  implements ServletContextListener {
 
 
         Player neymar = Player.builder()
-                .id(UUID.fromString("729a4ab7-3911-4af9-abf0-b25a6f9fdca3"))
+                .id(UUID.randomUUID())
                 .name("Neymar da Silva")
                 .overall(89)
                 .role(Role.STRIKER)
@@ -157,7 +157,7 @@ public class DataInitialization  implements ServletContextListener {
                 .build();
 
         Player de_Gea = Player.builder()
-                .id(UUID.fromString("b8ba959f-b3b5-4467-a93d-5b514a97de37"))
+                .id(UUID.randomUUID())
                 .name("David de Gea")
                 .overall(90)
                 .role(Role.GOALKEEPER)
@@ -166,7 +166,7 @@ public class DataInitialization  implements ServletContextListener {
                 .build();
 
         Player bellingham = Player.builder()
-                .id(UUID.fromString("f7905b93-11b8-4677-aae2-db9a45fbaf2a"))
+                .id(UUID.randomUUID())
                 .name("Jude Bellingham")
                 .overall(87)
                 .role(Role.MIDFIELDER)

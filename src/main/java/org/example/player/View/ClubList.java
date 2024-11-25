@@ -1,5 +1,6 @@
 package org.example.player.View;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -8,7 +9,7 @@ import org.example.player.entity.Club;
 import org.example.player.model.ClubsModel;
 import org.example.player.service.ClubService;
 
-@RequestScoped
+@ApplicationScoped
 @Named
 public class ClubList {
     private final ClubService service;
@@ -26,7 +27,6 @@ public class ClubList {
         return Clubs;
     }
     public String deleteAction(ClubsModel.Club club) {
-        System.out.println("KURECZE");
         service.deleteClub(Club.builder().id(club.getId()).build());
         return "club_list?faces-redirect=true";
     }

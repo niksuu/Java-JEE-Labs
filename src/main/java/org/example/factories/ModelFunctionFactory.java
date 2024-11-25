@@ -3,9 +3,14 @@ package org.example.factories;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.example.player.model.function.*;
+import org.example.user.model.function.UsersToModelFunction;
 
 @ApplicationScoped
 public class ModelFunctionFactory {
+
+    public UsersToModelFunction usersToModel(){
+        return new UsersToModelFunction();
+    }
 
     public ClubToModelFunction clubToModelFunction() {
         return new ClubToModelFunction();
