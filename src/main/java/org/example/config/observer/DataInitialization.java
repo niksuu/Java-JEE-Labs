@@ -19,6 +19,7 @@ import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -30,15 +31,12 @@ public class DataInitialization  implements ServletContextListener {
     private final ClubService clubService;
     private final PlayerService playerService;
 
-    private final RequestContextController requestContextController;
-
 
     @Inject
-    public DataInitialization(UserService userService, ClubService clubService, PlayerService playerService, RequestContextController requestContextController) {
+    public DataInitialization(UserService userService, ClubService clubService, PlayerService playerService) {
         this.userService = userService;
         this.clubService = clubService;
         this.playerService = playerService;
-        this.requestContextController = requestContextController;
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -47,10 +45,47 @@ public class DataInitialization  implements ServletContextListener {
 
 
     private void init(){
-        requestContextController.activate();
+
+        Club real = Club.builder()
+                .id(UUID.randomUUID())
+                .name("Real Madrid")
+                .description("Real Madrid has won more Spanish top-division (La Liga) championships (36) than any other Spanish side. ")
+                .budget(10000000.00)
+                .players(new ArrayList<>())
+                .build();
+
+        Club barca = Club.builder()
+                .id(UUID.randomUUID())
+                .name("Fc Barcelona")
+                .description("FC Barcelona, Spanish professional football (soccer) club located in Barcelona. FC Barcelona is renowned for its historically skillful and attractive brand of attacking football that places an emphasis on flowing, open play")
+                .budget(5500000.00)
+                .players(new ArrayList<>())
+                .build();
+
+        Club manchesterUnited = Club.builder()
+                .id(UUID.randomUUID())
+                .name("Manchester United")
+                .description("Manchester United, often simply referred to as United, are one of the most iconic and successful football clubs in the world, based in Old Trafford")
+                .budget(6500000.00)
+                .build();
+
+        Club psg = Club.builder()
+                .id(UUID.randomUUID())
+                .name("Paris Saint-Germain")
+                .description("PSG have the most consecutive seasons playing in France's top flight and are one of two French clubs to have won a major European title.")
+                .budget(13500000.00)
+                .build();
+
+
+        if (clubService.findAllClubs().isEmpty()) {
+            clubService.createClub(real);
+            clubService.createClub(barca);
+            clubService.createClub(manchesterUnited);
+            clubService.createClub(psg);
+        }
 
         User nikodem = User.builder()
-                .id(UUID.fromString("3c9cc7b4-a33b-409d-8aed-ae0ecc24b399"))
+                .id(UUID.randomUUID())
                 .username("nikodem")
                 .email("wariat123@org")
                 .registrationDate(LocalDate.now())
@@ -58,7 +93,7 @@ public class DataInitialization  implements ServletContextListener {
 
 
         User sebastian = User.builder()
-                .id(UUID.fromString("153dde34-043c-49aa-84e8-99ac37ecc1e2"))
+                .id(UUID.randomUUID())
                 .username("sebastian")
                 .email("seba420@pl")
                 .registrationDate(LocalDate.now())
@@ -66,67 +101,25 @@ public class DataInitialization  implements ServletContextListener {
 
 
         User jakub = User.builder()
-                .id(UUID.fromString("9f000860-2afb-4564-8616-7cf7aecabe4a"))
+                .id(UUID.randomUUID())
                 .username("jakub")
                 .email("jakub949@pl")
                 .registrationDate(LocalDate.now())
                 .build();
 
         User julia = User.builder()
-                .id(UUID.fromString("5d7eb2a9-0303-423b-9ba7-53d29f4be795"))
+                .id(UUID.randomUUID())
                 .username("julia")
                 .email("julkakulka@pl")
                 .registrationDate(LocalDate.now())
                 .build();
 
-
-        userService.createUser(nikodem);
-        userService.createUser(sebastian);
-        userService.createUser(jakub);
-        userService.createUser(julia);
-
-        Club real = Club.builder()
-                .id(UUID.fromString("ce3b7596-948f-4097-a7ef-0b4876afc695"))
-                .name("Real Madrid")
-                .description("Real Madrid has won more Spanish top-division (La Liga) championships (36) than any other Spanish side. ")
-                .budget(10000000.00)
-                .build();
-
-        Club barca = Club.builder()
-                .id(UUID.fromString("dd56efbf-2998-4b7c-b986-8df98f32fea0"))
-                .name("Fc Barcelona")
-                .description("FC Barcelona, Spanish professional football (soccer) club located in Barcelona. FC Barcelona is renowned for its historically skillful and attractive brand of attacking football that places an emphasis on flowing, open play")
-                .budget(5500000.00)
-                .build();
-
-        Club manchesterUnited = Club.builder()
-                .id(UUID.fromString("14b58e3a-3917-4e75-a5ce-0e6f7d9f484f"))
-                .name("Manchester United")
-                .description("Manchester United, often simply referred to as United, are one of the most iconic and successful football clubs in the world, based in Old Trafford")
-                .budget(6500000.00)
-                .build();
-
-        Club psg = Club.builder()
-                .id(UUID.fromString("69f6d05b-a49d-450e-9d04-8c0295a2a3d3"))
-                .name("Paris Saint-Germain")
-                .description("PSG have the most consecutive seasons playing in France's top flight and are one of two French clubs to have won a major European title.")
-                .budget(13500000.00)
-                .build();
-
-        clubService.createClub(real);
-        clubService.createClub(barca);
-        clubService.createClub(manchesterUnited);
-        clubService.createClub(psg);
-
-
-        System.out.println();
-        System.out.println();
-        System.out.println("======Clubs========:");
-        clubService.findAllClubs().forEach(System.out::println);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-
+        if (userService.findAllUsers().isEmpty()) {
+            userService.createUser(nikodem);
+            userService.createUser(sebastian);
+            userService.createUser(jakub);
+            userService.createUser(julia);
+        }
 
         Player ronaldo = Player.builder()
                 .id(UUID.randomUUID())
@@ -173,40 +166,40 @@ public class DataInitialization  implements ServletContextListener {
                 .club(real)
                 .user(julia)
                 .build();
+        if(playerService.findAllPlayers().isEmpty()) {
+            playerService.createPlayer(ronaldo);
+            playerService.createPlayer(messi);
+            playerService.createPlayer(neymar);
+            playerService.createPlayer(de_Gea);
+            playerService.createPlayer(bellingham);
+        }
 
-        playerService.createPlayer(ronaldo);
-        playerService.createPlayer(messi);
-        playerService.createPlayer(neymar);
-        playerService.createPlayer(de_Gea);
-        playerService.createPlayer(bellingham);
 
 
-
-
-        System.out.println();
-        System.out.println("================CLUBS======================");
-        clubService.findAllClubs().forEach(club -> {
-            System.out.println();
-            System.out.println("Club: " + club.getName());
-                System.out.println("Players: :");
-                club.getPlayers().forEach(player -> {
-                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
-                });
-            System.out.println();
-            System.out.println(" ");
-        });
-        System.out.println();
-        System.out.println("==================USERS====================");
-        userService.findAllUsers().forEach(user -> {
-            System.out.println("User: " + user.getUsername());
-                System.out.println("Players: :");
-                user.getPlayers().forEach(player -> {
-                    System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
-                });
-            System.out.println();
-            System.out.println(" ");
-        });
-        System.out.println();
+    //   System.out.println();
+    //   System.out.println("================CLUBS======================");
+    //   clubService.findAllClubs().forEach(club -> {
+    //       System.out.println();
+    //       System.out.println("Club: " + club.getName());
+    //           System.out.println("Players: :");
+    //           club.getPlayers().forEach(player -> {
+    //               System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
+    //           });
+    //       System.out.println();
+    //       System.out.println(" ");
+    //   });
+    //   System.out.println();
+    //   System.out.println("==================USERS====================");
+    //   userService.findAllUsers().forEach(user -> {
+    //       System.out.println("User: " + user.getUsername());
+    //           System.out.println("Players: :");
+    //           user.getPlayers().forEach(player -> {
+    //               System.out.println("   * " + player.getName()+" ("+player.getOverall()+") "+player.getRole());
+    //           });
+    //       System.out.println();
+    //       System.out.println(" ");
+    //   });
+    //   System.out.println();
 
      //   clubService.deleteClub(barca);
      //   ronaldo.setOverall(90);
@@ -223,9 +216,6 @@ public class DataInitialization  implements ServletContextListener {
      //       System.out.println(" ");
      //   });
      //   System.out.println();
-
-
-        requestContextController.deactivate();
 
 
 

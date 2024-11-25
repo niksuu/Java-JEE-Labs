@@ -1,4 +1,4 @@
-package org.example.player.persistence;
+package org.example.player.repository.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;

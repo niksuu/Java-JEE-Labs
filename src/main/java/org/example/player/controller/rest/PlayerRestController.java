@@ -46,9 +46,9 @@ public class PlayerRestController implements PlayerController {
     }
     
     @Override
-    public void putPlayer(UUID genreId, UUID id, PutPlayerRequest request) {
+    public void putPlayer(UUID clubId, UUID id, PutPlayerRequest request) {
         try {
-            service.createPlayer(factory.requestToPlayer().apply(genreId,id,request));
+            service.createPlayer(factory.requestToPlayer().apply(clubId,id,request));
         }  catch (TransactionalException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);

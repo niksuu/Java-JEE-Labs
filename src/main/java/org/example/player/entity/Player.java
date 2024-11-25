@@ -16,7 +16,6 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Table(name = "players")
-@ToString
 public class Player implements Serializable{
     @Id
     private UUID id;
@@ -27,7 +26,7 @@ public class Player implements Serializable{
     @JoinColumn(name="club")
     private Club club;
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_name")
     private User user;
 
 

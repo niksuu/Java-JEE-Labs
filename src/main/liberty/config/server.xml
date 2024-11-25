@@ -11,7 +11,7 @@
         <feature>persistence-3.1</feature>
     </featureManager>
 
-    <dataSource id="FootballDataSource" jndiName="jdbc/FootballDB">
+    <dataSource id="FootballDataSource" jndiName="jdbc/football">
         <jdbcDriver javax.sql.XADataSource="org.h2.jdbcx.JdbcDataSource"
                     javax.sql.ConnectionPoolDataSource="org.h2.jdbcx.JdbcDataSource"
                     javax.sql.DataSource="org.h2.jdbcx.JdbcDataSource"

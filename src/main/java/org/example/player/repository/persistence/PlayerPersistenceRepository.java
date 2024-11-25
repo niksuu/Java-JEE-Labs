@@ -1,7 +1,6 @@
-package org.example.player.persistence;
+package org.example.player.repository.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -59,8 +58,11 @@ public class PlayerPersistenceRepository implements PlayerRepository {
     }
     @Override
     public List<Player> findAllByClub(Club club) {
-        return em.createQuery("select c from Player c where c.club = :club", Player.class)
-                .setParameter("club", club)
-                .getResultList();
+        club = em.find(Club.class, club.getId());
+        return club.getPlayers();
+
+      //  return em.createQuery("select c from Player c where c.club = :club", Player.class)
+      //          .setParameter("club", club)
+      //          .getResultList();
     }
 }

@@ -20,9 +20,9 @@ public class RequestToPlayerFunction implements TriFunction<UUID,UUID,PutPlayerR
                 .overall(request.getOverall())
                 .club(Club.builder()
                         .id(clubId).build())
-                .user(User.builder()
-                        .id(request.getUser())
-                        .build())
+        //       .user(User.builder()
+        //               .id(request.getUser())
+        //               .build())
                 .build();
     }
 }
