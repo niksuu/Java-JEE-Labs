@@ -1,7 +1,9 @@
-package org.example.player.model.dto;
+package org.example.player.model;
 
 import lombok.*;
+import lombok.EqualsAndHashCode;
 import org.example.player.entity.Role;
+import org.example.user.model.UserModel;
 
 import java.util.UUID;
 
@@ -12,12 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class PutPlayerRequest {
-    private UUID id;
+public class PlayerEditModel {
     private String name;
     private String overall;
     private Role role;
-    private UUID club;
-    private UUID user;
+    private UserModel user;
     private Long version;
 }

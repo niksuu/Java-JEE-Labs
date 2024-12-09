@@ -15,6 +15,9 @@ public class UpdatePlayerWithRequestFunction implements BiFunction<Player, Patch
                 .role(patchPlayerRequest.getRole())
                 .user(player.getUser())
                 .club(player.getClub())
+                .version(patchPlayerRequest.getVersion())
+                .creationDateTime(player.getCreationDateTime())
+                .updateDateTime(player.getUpdateDateTime())
                 .build();
     }
 }

@@ -4,8 +4,12 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import org.example.player.entity.Club;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import org.example.club.Club;
 import org.example.player.entity.Player;
+//import org.example.player.entity.Player_;
+import org.example.player.entity.Player_;
 import org.example.player.repository.api.PlayerRepository;
 import org.example.user.entity.User;
 
@@ -13,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import jakarta.persistence.criteria.Root;
 @Dependent
 public class PlayerPersistenceRepository implements PlayerRepository {
     private EntityManager em;
@@ -29,7 +34,13 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public List<Player> findAll() {
-        return em.createQuery("select c from Player c", Player.class).getResultList();
+        //return em.createQuery("select c from Player c", Player.class).getResultList();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
@@ -52,10 +63,20 @@ public class PlayerPersistenceRepository implements PlayerRepository {
     @Override
     public Optional<Player> findByIdAndUser(UUID id, User user) {
         try {
-            return Optional.of(em.createQuery("select c from Player c where c.id = :id and c.user = :user", Player.class)
-                    .setParameter("user", user)
-                    .setParameter("id", id)
-                    .getSingleResult());
+//            return Optional.of(em.createQuery("select c from Player c where c.id = :id and c.user = :user", Player.class)
+//                    .setParameter("user", user)
+//                    .setParameter("id", id)
+//                    .getSingleResult());
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Player> query = cb.createQuery(Player.class);
+            Root<Player> root = query.from(Player.class);
+            query.select(root)
+                    .where(cb.and(
+                            cb.equal(root.get(Player_.user), user),
+                            cb.equal(root.get(Player_.id), id)
+                    ));
+            return Optional.of(em.createQuery(query).getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
@@ -63,16 +84,29 @@ public class PlayerPersistenceRepository implements PlayerRepository {
 
     @Override
     public List<Player> findAllByUser(User user) {
-        return em.createQuery("select c from Player c where c.user = :user", Player.class)
-                .setParameter("user", user)
-                .getResultList();
+//        return em.createQuery("select c from Player c where c.user = :user", Player.class)
+//                .setParameter("user", user)
+//                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root)
+                .where(cb.equal(root.get(Player_.user), user));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public List<Player> findAllByClub(Club club) {
-        return em.createQuery("select c from Player c where c.club = :club", Player.class)
-                .setParameter("club", club)
-                .getResultList();
+//        return em.createQuery("select c from Player c where c.club = :club", Player.class)
+//                .setParameter("club", club)
+//                .getResultList();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Player> query = cb.createQuery(Player.class);
+        Root<Player> root = query.from(Player.class);
+        query.select(root)
+                .where(cb.equal(root.get(Player_.club), club));
+        return em.createQuery(query).getResultList();
     }
 
 

@@ -4,11 +4,10 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.entity.Player;
 import org.example.player.repository.api.ClubRepository;
 import org.example.player.repository.api.PlayerRepository;
@@ -16,7 +15,6 @@ import org.example.user.entity.User;
 import org.example.user.entity.UserRoles;
 import org.example.user.repository.api.UserRepository;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -93,7 +91,7 @@ public class PlayerService {
     @RolesAllowed(UserRoles.USER)
     public Optional<Player> findForCallerPrincipal(UUID id) {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
-            return findPlayerById(id);
+            return playerRepository.find(id);
         }
 
         User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())

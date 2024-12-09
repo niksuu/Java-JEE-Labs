@@ -1,7 +1,8 @@
-package org.example.player.entity;
+package org.example.club;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.player.entity.Player;
 
 import java.io.Serializable;
 import java.util.List;

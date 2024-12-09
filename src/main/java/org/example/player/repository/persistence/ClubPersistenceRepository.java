@@ -3,7 +3,10 @@ package org.example.player.repository.persistence;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.example.player.entity.Club;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.example.club.Club;
 import org.example.player.repository.api.ClubRepository;
 
 import java.util.List;
@@ -26,7 +29,12 @@ public class ClubPersistenceRepository implements ClubRepository {
 
     @Override
     public List<Club> findAll() {
-        return em.createQuery("select p from Club p", Club.class).getResultList();
+//        return em.createQuery("select p from Club p", Club.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Club> query = cb.createQuery(Club.class);
+        Root<Club> root = query.from(Club.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override

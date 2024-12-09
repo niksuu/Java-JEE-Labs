@@ -42,4 +42,10 @@ public class ModelFunctionFactory {
     public PlayersToModelFunction playersToModel() {
         return new PlayersToModelFunction();
     }
+    public PlayerToEditModelFunction playerToEditModel() {
+        return new PlayerToEditModelFunction(userToModel());
+    }
+    public UpdatePlayerWithModelFunction updatePlayer(){
+        return new UpdatePlayerWithModelFunction();
+    }
 }

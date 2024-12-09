@@ -1,7 +1,7 @@
 package org.example.player.model.dto.function;
 
 import org.example.component.TriFunction;
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.entity.Player;
 import org.example.player.model.dto.PutPlayerRequest;
 import org.example.user.entity.User;

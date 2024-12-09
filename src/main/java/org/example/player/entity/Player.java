@@ -2,6 +2,9 @@ package org.example.player.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.example.club.Club;
+import org.example.entity.VersionAndCreationDateAuditable;
 import org.example.user.entity.User;
 
 import java.io.Serializable;
@@ -9,14 +12,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "players")
-@ToString
-public class Player implements Serializable {
+public class Player extends VersionAndCreationDateAuditable implements Serializable {
     @Id
     private UUID id;
     private String name;

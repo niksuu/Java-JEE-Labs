@@ -5,10 +5,10 @@ base_dir = "C:/Users/Admin/Documents/GitHub/Java-JEE-Labs/src"
 
 # Reguły zamiany
 rename_rules = {
-    "genre": "club",
-    "Genre": "Club",
-    "movie": "player",
-    "Movie": "Player",
+    "club": "club",
+    "Club": "Club",
+    "player": "player",
+    "Player": "Player",
 }
 
 def rename_files_and_folders(root_path):

@@ -15,6 +15,7 @@ public class PlayerToResponseFunction implements Function<Player, GetPlayerRespo
                 .role(entity.getRole())
                 .user(entity.getUser().toString())
                 .club(entity.getClub().toString())
+                .version(entity.getVersion())
                 .build();
     }
 }

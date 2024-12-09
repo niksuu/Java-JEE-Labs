@@ -7,7 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.repository.api.ClubRepository;
 import org.example.user.entity.UserRoles;
 

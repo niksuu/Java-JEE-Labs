@@ -9,7 +9,7 @@ import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.entity.Player;
 import org.example.player.entity.Role;
 import org.example.player.service.ClubService;
@@ -63,6 +63,17 @@ public class DataInitialization {
                 .login("admin")
                 .username("admin")
                 .email("admin@simplerpg.example.com")
+                .password("adminadmin")
+                .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                .build();
+
+
+        User admin2 = User.builder()
+                .id(UUID.randomUUID())
+                .login("admin2")
+                .username("admin2")
+                .email("admin2@simplerpg.example.com")
                 .password("adminadmin")
                 .registrationDate(LocalDate.now())
                 .roles(List.of(UserRoles.ADMIN, UserRoles.USER))

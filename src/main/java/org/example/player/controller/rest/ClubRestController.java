@@ -13,7 +13,6 @@ import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.example.factories.DtoFunctionFactory;
 import org.example.player.controller.api.ClubController;
-import org.example.player.entity.Club;
 import org.example.player.model.dto.GetClubResponse;
 import org.example.player.model.dto.GetClubsResponse;
 import org.example.player.model.dto.PatchClubRequest;
@@ -22,7 +21,6 @@ import org.example.player.service.ClubService;
 import org.example.user.entity.UserRoles;
 
 import java.util.UUID;
-import java.util.logging.Level;
 
 @Path("")
 @Log

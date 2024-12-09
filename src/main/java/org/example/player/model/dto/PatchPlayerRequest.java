@@ -14,4 +14,5 @@ public class PatchPlayerRequest {
     private String name;
     private String overall;
     private Role role;
+    private Long version;
 }

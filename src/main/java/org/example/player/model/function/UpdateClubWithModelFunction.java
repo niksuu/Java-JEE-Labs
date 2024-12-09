@@ -1,6 +1,6 @@
 package org.example.player.model.function;
 
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.model.ClubEditModel;
 
 import java.io.Serializable;

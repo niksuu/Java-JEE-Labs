@@ -4,6 +4,7 @@ import lombok.*;
 import org.example.player.entity.Role;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 @Getter
@@ -30,5 +31,8 @@ public class PlayersModel implements Serializable {
         private String name;
         private String overall;
         private Role role;
+        private Long version;
+        private LocalDateTime creationDateTime;
+        private LocalDateTime updateDateTime;
     }
 }

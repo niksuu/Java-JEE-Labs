@@ -19,4 +19,5 @@ public class GetPlayerResponse {
     private Role role;
     private String club;
     private String user;
+    private Long version;
 }

@@ -1,6 +1,6 @@
 package org.example.player.model.dto.function;
 
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.model.dto.PatchClubRequest;
 
 import java.util.function.BiFunction;

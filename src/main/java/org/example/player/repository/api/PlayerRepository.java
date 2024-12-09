@@ -1,6 +1,6 @@
 package org.example.player.repository.api;
 
-import org.example.player.entity.Club;
+import org.example.club.Club;
 import org.example.player.entity.Player;
 import org.example.repository.api.Repository;
 import org.example.user.entity.User;
