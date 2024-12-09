@@ -1,0 +1,112 @@
+# Get all clubs.
+
+GET http://localhost:9082/playerRental/api/clubs
+
+###
+
+# create club
+
+PUT http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19
+Content-Type: application/json
+
+{
+  "name": "drama",
+  "budget": 4.1,
+  "description": "testtttt"
+}
+
+###
+
+# update club
+
+PATCH http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19
+Content-Type: application/json
+
+{
+  "budget": 7.2,
+  "description": "super test"
+}
+
+###
+
+# Get single club.
+
+GET http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19
+
+###
+
+# delete club.
+
+DELETE http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19
+
+
+### Players
+
+# Get all players.
+
+GET http://localhost:9082/playerRental/api/players
+
+###
+
+PUT http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19/players/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+Content-Type: application/json
+
+{
+  "name": "test",
+  "overall": "robert",
+  "role": "GOALKEEPER",
+  "user": "856248d3-e719-496f-bb7a-49ec3210a710"
+}
+
+###
+
+PATCH http://localhost:9082/playerRental/api/players/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+Content-Type: application/json
+
+{
+  "name": "zmiana nazwy",
+  "overall": "basia",
+  "role": "MIDFILDER"
+}
+
+###
+
+# Get all players of a given club
+
+GET http://localhost:9082/playerRental/api/clubs/9e1a6242-0164-4044-9006-bbb57d14ef19/players
+
+###
+
+# Get a player
+
+GET http://localhost:9082/playerRental/api/players/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+
+###
+
+# Remove a player
+
+DELETE http://localhost:9082/playerRental/api/players/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+
+### USERS
+
+# get all users
+
+GET http://localhost:9082/playerRental/api/users
+
+###
+
+# create user
+
+PUT http://localhost:9082/playerRental/api/users/0ca05b76-9b5a-4451-98b2-3f31f1d75589
+Content-Type: application/json
+
+{
+  "username": "test",
+  "email": "tescioch@awp.pl"
+}
+
+###
+
+# Get user.
+
+GET http://localhost:9082/playerRental/api/users/0ca05b76-9b5a-4451-98b2-3f31f1d75589

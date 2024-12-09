@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{clubView.id}" required="true"/>
+        <f:viewAction action="#{clubView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2><h:outputText value="#{clubView.club.name}"/></h2></header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <h:outputText value="#{msg['club.view.description']}" />
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{clubView.club.description}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <h:outputText value="#{msg['club.view.budget']}" />
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{clubView.club.budget}"/>
+                            </div>
+                        </div>
+
+                        <h:dataTable value="#{clubView.players.players}" var="player"
+                                     styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="#{msg['club.view.name']}" /></f:facet>
+                                <h:outputText value="#{player.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="#{msg['club.view.view']}" /></f:facet>
+                                <h:link outcome="/player/player_view.xhtml" value="#{msg['club.view.view']}">
+                                    <f:param name="id" value="#{player.id}"/>
+                                </h:link>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="#{msg['club.view.delete']}" /></f:facet>
+                                <h:form>
+                                    <h:commandButton styleClass="btn" value="#{msg['club.view.delete']}"
+                                                     action="#{clubView.deletePlayer(player.id)}"/>
+                                </h:form>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>

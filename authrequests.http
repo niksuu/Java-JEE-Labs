@@ -1,0 +1,154 @@
+//admin
+//YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+//User
+//a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+
+
+// TESTING INSTRUCTION's USE CASES
+
+//******************//only admin can add and delete player types
+//******************//user can view all player types
+
+### PUT new club as admin
+// @no-cookie-jar
+PUT http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs/6abd5ba8-37ff-4c0c-8e75-b3baa6632e05
+Content-Type: application/json
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+{
+  "name": "test club",
+  "speed": "my test",
+  "budget": 3.1
+}
+
+### GET created club as admin
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs/6abd5ba8-37ff-4c0c-8e75-b3baa6632e05
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+### DELETE club as admin
+// @no-cookie-jar
+DELETE http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs/6abd5ba8-37ff-4c0c-8e75-b3baa6632e05
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+### PUT new club as user - error
+// @no-cookie-jar
+PUT http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs/6abd5ba8-37ff-4c0c-8e75-b3baa6632e05
+Content-Type: application/json
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+{
+  "name": "test club",
+  "speed": "my test",
+  "budget": 3.1
+}
+
+### DELETE club as user - error
+// @no-cookie-jar
+DELETE http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs/6abd5ba8-37ff-4c0c-8e75-b3baa6632e05
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+//******************//user can view all player types
+
+### GET all clubs as user
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/clubs
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+//******************//everyone can add a new user
+
+### PUT new user
+// @no-cookie-jar
+PUT http://localhost:9082/labs1-1.0-SNAPSHOT/api/users/391a9234-d715-4feb-8624-ae9cebd0dbe4
+Content-Type: application/json
+
+{
+  "login": "test",
+  "username": "V3gaBOND",
+  "password": "test",
+  "email": "janko@wp.pl"
+}
+### GET all users
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/users
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+//******************//admin can view all players
+
+### GET all players as admin
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/players
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+
+//******************//user can only view his players
+
+### GET all players as user
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/players
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+//******************//admin can add and delete all elements
+
+### PUT new player as admin
+// @no-cookie-jar
+PUT http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/73e54c57-0e7d-4f03-bcd2-5385877f2d1b
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+Content-Type: application/json
+
+{
+  "name": "Super film",
+  "overall": "Jan Cameron",
+  "role": "GOALKEEPER",
+  "club": "cdfbd2ad-7c1e-48d7-9f91-2d6d0c089b60",
+  "user": "665e4aba-0640-49c2-b71f-4ddf1f9674ba"
+}
+
+
+### GET created player as admin
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/73e54c57-0e7d-4f03-bcd2-5385877f2d1b
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+### DELETE created player as user (not the owner)
+// @no-cookie-jar
+DELETE http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/73e54c57-0e7d-4f03-bcd2-5385877f2d1b
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+### DELETE created player as admin
+// @no-cookie-jar
+DELETE http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/73e54c57-0e7d-4f03-bcd2-5385877f2d1b
+Authorization: Basic YWRtaW4tc2VydmljZTphZG1pbmFkbWlu
+
+
+//******************// user can add elements
+
+### PUT new player as user
+// @no-cookie-jar
+PUT http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/cbfef27d-e38b-4651-ad1e-0385d25cd89d
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+Content-Type: application/json
+
+{
+  "name": "Super film 2",
+  "overall": "Jan Cameron 2",
+  "role": "GOALKEEPER",
+  "club": "cdfbd2ad-7c1e-48d7-9f91-2d6d0c089b60"
+}
+
+### GET created player as user
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/cbfef27d-e38b-4651-ad1e-0385d25cd89d
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+### GET created player as user (all his players)
+// @no-cookie-jar
+GET http://localhost:9083/labs1-1.0-SNAPSHOT/api/players
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr
+
+### DELETE created player as user (owner)
+// @no-cookie-jar
+DELETE http://localhost:9083/labs1-1.0-SNAPSHOT/api/players/cbfef27d-e38b-4651-ad1e-0385d25cd89d
+Authorization: Basic a3J6eXN6dG9mMTIzOmtyenlzenRvZmVr

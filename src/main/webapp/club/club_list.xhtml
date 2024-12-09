@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="club" name="css/club_list.css"/><!-- Automatically relocated to head. -->
+
+        <article class="text--justified">
+            <header><h2><h:outputText value="#{msg['club.list.title']}" /></h2></header>
+
+            <h:dataTable value="#{clubList.clubs.clubs}" var="club"
+                         styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg['club.list.name']}" /></f:facet>
+                    <h:outputText value="#{club.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg['club.list.view']}" /></f:facet>
+                    <h:link outcome="/club/club_view.xhtml" value="#{msg['club.list.view']}">
+                        <f:param name="id" value="#{club.id}"/>
+                    </h:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#{msg['club.list.edit']}" /></f:facet>
+                    <h:link outcome="/club/club_edit.xhtml" value="#{msg['club.list.edit']}">
+                        <f:param name="id" value="#{club.id}"/>
+                    </h:link>
+                </h:column>
+
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                    <f:facet name="header"><h:outputText value="#{msg['club.list.delete']}" /></f:facet>
+                    <h:form>
+                        <h:commandButton styleClass="btn" value="#{msg['club.list.delete']}"
+                                         action="#{clubList.deleteAction(club)}"/>
+                    </h:form>
+                </h:column>
+
+                <f:facet name="footer">
+                    <h:button styleClass="btn" outcome="/club/club_create__basic.xhtml"
+                              value="#{msg['club.list.createNew']}" />
+                </f:facet>
+            </h:dataTable>
+        </article>
+    </ui:define>
+
+</ui:composition>
